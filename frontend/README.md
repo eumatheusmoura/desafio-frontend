@@ -1,36 +1,185 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Desafio Frontend - Dashboard Moderno
 
-## Getting Started
+Uma aplicação frontend moderna desenvolvida com Next.js 15, TypeScript e Tailwind CSS, seguindo as melhores práticas de Clean Code e UX Design.
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** - Framework React com App Router
+- **TypeScript** - Tipagem estática para JavaScript
+- **Tailwind CSS** - Framework CSS utilitário
+- **shadcn/ui** - Componentes UI reutilizáveis
+- **Lucide React** - Ícones SVG
+- **pnpm** - Gerenciador de pacotes
+
+## 📁 Estrutura do Projeto
+
+```
+frontend/
+├── app/                    # App Router do Next.js
+│   ├── layout.tsx         # Layout raiz com metadados SEO
+│   ├── page.tsx           # Página home
+│   └── globals.css        # Estilos globais
+├── components/            # Componentes reutilizáveis
+│   ├── layout/           # Componentes de layout
+│   ├── navbar-components/ # Componentes da navbar
+│   ├── ui/               # Componentes base (shadcn/ui)
+│   └── navbar.tsx        # Componente principal da navbar
+├── types/                # Definições de tipos TypeScript
+│   └── navigation.ts     # Tipos para navegação
+└── lib/                  # Utilitários
+    └── utils.ts          # Funções utilitárias
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎯 Recursos Implementados
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ✅ Legibilidade do Código
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Clean Code**: Funções pequenas, nomes descritivos, responsabilidade única
+- **TypeScript**: Tipagem forte com interfaces bem definidas
+- **Comentários**: Documentação clara nos componentes principais
+- **Consistência**: Padrões de nomenclatura e estrutura uniformes
 
-## Learn More
+### ✅ Modularização
 
-To learn more about Next.js, take a look at the following resources:
+- **Componentes Atômicos**: Cada componente tem uma responsabilidade específica
+- **Separação de Responsabilidades**: Layout, UI e lógica de negócio separados
+- **Reutilização**: Componentes parametrizáveis e extensíveis
+- **Estrutura Hierárquica**: Organização clara de pastas e arquivos
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### ✅ Experiência do Usuário (UX)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Design Responsivo**: Adaptável a todos os tamanhos de tela
+- **Acessibilidade**: Aria-labels, navegação por teclado, contraste adequado
+- **Performance**: Carregamento otimizado com Next.js
+- **Interatividade**: Animações suaves e feedback visual
 
-## Deploy on Vercel
+### ✅ Navbar Moderna
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Responsiva**: Menu hambúrguer em mobile, layout horizontal em desktop
+- **Acessível**: Navegação por teclado e leitores de tela
+- **Interativa**: Menu de usuário com dropdown
+- **Customizável**: Props tipadas para personalização
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🛠️ Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js 18+
+- pnpm (recomendado) ou npm
+
+### Passos para execução
+
+1. **Instalar dependências**
+
+   ```bash
+   pnpm install
+   ```
+
+2. **Executar em modo desenvolvimento**
+
+   ```bash
+   pnpm dev
+   ```
+
+3. **Acessar a aplicação**
+   ```
+   http://localhost:3000
+   ```
+
+### Scripts Disponíveis
+
+- `pnpm dev` - Inicia o servidor de desenvolvimento
+- `pnpm build` - Gera build de produção
+- `pnpm start` - Inicia servidor de produção
+- `pnpm lint` - Executa verificação de linting
+
+## 🏗️ Arquitetura e Padrões
+
+### Princípios Aplicados
+
+1. **Single Responsibility Principle (SRP)**
+
+   - Cada componente tem uma única responsabilidade
+   - Separação clara entre apresentação e lógica
+
+2. **Open/Closed Principle (OCP)**
+
+   - Componentes extensíveis via props
+   - Interfaces bem definidas para futuras extensões
+
+3. **Interface Segregation Principle (ISP)**
+
+   - Interfaces específicas e enxutas
+   - Props opcionais para flexibilidade
+
+4. **Dependency Inversion Principle (DIP)**
+   - Dependências abstraídas em interfaces
+   - Inversão de controle via props
+
+### Padrões de Design
+
+- **Composition Pattern**: Componentes compostos de outros componentes
+- **Provider Pattern**: Contexto global quando necessário
+- **Custom Hooks**: Lógica reutilizável extraída
+- **Atomic Design**: Hierarquia de componentes (atoms → molecules → organisms)
+
+## 🎨 Customização
+
+### Temas
+
+O projeto utiliza CSS Variables para customização de cores:
+
+- Definidas em `globals.css`
+- Compatível com modo escuro/claro
+- Facilmente extensível
+
+### Componentes
+
+Todos os componentes são altamente customizáveis via props:
+
+- `className` para estilos personalizados
+- `variant` para variações pré-definidas
+- Props específicas para comportamento
+
+## 📈 Performance
+
+- **Bundle Otimizado**: Tree-shaking automático
+- **Code Splitting**: Carregamento sob demanda
+- **Imagens Otimizadas**: Next.js Image component
+- **CSS Purging**: Tailwind remove estilos não utilizados
+
+## 🔧 Próximos Passos
+
+Para implementação das APIs mencionadas no desafio:
+
+1. **Setup de API Routes**
+
+   ```typescript
+   // app/api/example/route.ts
+   export async function GET() {
+     // Implementar lógica da API
+   }
+   ```
+
+2. **Integração com Backend**
+
+   - Configurar cliente HTTP (fetch/axios)
+   - Implementar error handling
+   - Adicionar loading states
+
+3. **Gerenciamento de Estado**
+   - React Query para cache de dados
+   - Zustand para estado global
+   - Form handling com react-hook-form
+
+## 📞 Suporte
+
+Este projeto foi desenvolvido seguindo as melhores práticas de:
+
+- **Clean Code** (Robert C. Martin)
+- **Atomic Design** (Brad Frost)
+- **React Best Practices**
+- **TypeScript Guidelines**
+- **Accessibility Standards (WCAG)**
+
+Para dúvidas ou sugestões, consulte a documentação dos frameworks utilizados.
