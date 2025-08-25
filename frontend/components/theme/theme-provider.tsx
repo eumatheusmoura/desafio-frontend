@@ -1,13 +1,13 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState } from "react";
-
-type Theme = "dark" | "light" | "system";
+import { THEME_CONFIG, type Theme, type ResolvedTheme } from "./config";
 
 interface ThemeProviderContextType {
   theme: Theme;
   setTheme: (theme: Theme) => void;
-  resolvedTheme: "dark" | "light";
+  resolvedTheme: ResolvedTheme;
+  isLoading: boolean;
 }
 
 interface ThemeProviderProps {
@@ -22,20 +22,47 @@ const ThemeProviderContext = createContext<
 
 export function ThemeProvider({
   children,
-  defaultTheme = "system",
-  storageKey = "ui-theme",
+  defaultTheme = THEME_CONFIG.defaultTheme,
+  storageKey = THEME_CONFIG.storageKey,
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<"dark" | "light">("light");
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem(storageKey) as Theme;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, [storageKey]);
+    const getInitialTheme = (): Theme => {
+      if (typeof window === "undefined") return defaultTheme;
+
+      const savedTheme = localStorage.getItem(storageKey) as Theme;
+      return savedTheme || defaultTheme;
+    };
+
+    const applyTheme = (themeToApply: Theme) => {
+      const root = window.document.documentElement;
+
+      if (themeToApply === "system") {
+        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+          .matches
+          ? "dark"
+          : "light";
+        setResolvedTheme(systemTheme);
+        root.classList.toggle("dark", systemTheme === "dark");
+      } else {
+        setResolvedTheme(themeToApply);
+        root.classList.toggle("dark", themeToApply === "dark");
+      }
+    };
+
+    const initialTheme = getInitialTheme();
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
+
+    setIsLoading(false);
+  }, [defaultTheme, storageKey]);
 
   useEffect(() => {
+    if (isLoading) return;
+
     const root = window.document.documentElement;
 
     const updateResolvedTheme = () => {
@@ -63,7 +90,7 @@ export function ThemeProvider({
 
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [theme]);
+  }, [theme, isLoading]);
 
   const value: ThemeProviderContextType = {
     theme,
@@ -72,6 +99,7 @@ export function ThemeProvider({
       setTheme(newTheme);
     },
     resolvedTheme,
+    isLoading,
   };
 
   return (

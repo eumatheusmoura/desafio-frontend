@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeProvider, THEME_CONFIG } from "@/components/theme";
+import ToasterProvider from "@/components/toaster-provider";
+
 import "./globals.css";
 
 const geistSans = Geist({
@@ -64,14 +66,46 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('${THEME_CONFIG.storageKey}') || '${THEME_CONFIG.defaultTheme}';
+                  var resolvedTheme = theme;
+                  
+                  if (theme === 'system') {
+                    resolvedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                  }
+                  
+                  if (resolvedTheme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {
+                  // Fallback para tema claro se houver erro
+                  document.documentElement.classList.remove('dark');
+                }
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
-          defaultTheme="system"
-          storageKey="desafio-frontend-theme"
+          defaultTheme={THEME_CONFIG.defaultTheme}
+          storageKey={THEME_CONFIG.storageKey}
         >
           {children}
+          <ToasterProvider defaultPosition="top-center" />
         </ThemeProvider>
       </body>
     </html>

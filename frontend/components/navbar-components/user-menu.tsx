@@ -35,7 +35,8 @@ const userMenuItems: UserMenuItem[] = [
     label: "Sair",
     icon: LogOutIcon,
     variant: "destructive",
-    onClick: () => console.log("Logout"),
+    onClick: () => {
+    },
   },
 ];
 

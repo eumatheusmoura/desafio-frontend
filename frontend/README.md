@@ -1,6 +1,6 @@
 # Desafio Frontend - Dashboard Moderno
 
-Uma aplicação frontend moderna desenvolvida com Next.js 15, TypeScript e Tailwind CSS, seguindo as melhores práticas de Clean Code e UX Design.
+Uma aplicação frontend moderna desenvolvida com Next.js 15, TypeScript e Tailwind CSS, seguindo as melhores práticas de Clean Code e UX Design. Inclui uma DataTable completa para gerenciamento de usuários com funcionalidades avançadas.
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -8,7 +8,12 @@ Uma aplicação frontend moderna desenvolvida com Next.js 15, TypeScript e Tailw
 - **TypeScript** - Tipagem estática para JavaScript
 - **Tailwind CSS** - Framework CSS utilitário
 - **shadcn/ui** - Componentes UI reutilizáveis
+- **DiceUI DataTable** - Tabela avançada com filtros e sorting
+- **React Hook Form** - Gerenciamento de formulários
+- **Zod** - Validação de schema
+- **nuqs** - Gerenciamento de estado de query parameters
 - **Lucide React** - Ícones SVG
+- **date-fns** - Manipulação de datas
 - **pnpm** - Gerenciador de pacotes
 
 ## 📁 Estrutura do Projeto
@@ -16,18 +21,27 @@ Uma aplicação frontend moderna desenvolvida com Next.js 15, TypeScript e Tailw
 ```
 frontend/
 ├── app/                    # App Router do Next.js
-│   ├── layout.tsx         # Layout raiz com metadados SEO
-│   ├── page.tsx           # Página home
+│   ├── layout.tsx         # Layout raiz com ThemeProvider e NuqsAdapter
+│   ├── page.tsx           # Página home com DataTable
 │   └── globals.css        # Estilos globais
 ├── components/            # Componentes reutilizáveis
+│   ├── data-table/       # Componentes da DataTable (DiceUI)
 │   ├── layout/           # Componentes de layout
 │   ├── navbar-components/ # Componentes da navbar
+│   ├── theme/            # Sistema de temas (dark/light)
 │   ├── ui/               # Componentes base (shadcn/ui)
-│   └── navbar.tsx        # Componente principal da navbar
+│   ├── usuarios/         # Componentes específicos de usuários
+│   │   ├── usuarios-table.tsx # DataTable principal
+│   │   └── usuario-form.tsx   # Formulário com validação
+│   └── navigation-header.tsx  # Header principal da aplicação
 ├── types/                # Definições de tipos TypeScript
-│   └── navigation.ts     # Tipos para navegação
-└── lib/                  # Utilitários
-    └── utils.ts          # Funções utilitárias
+│   ├── navigation.ts     # Tipos para navegação
+│   └── usuario.ts        # Schema e tipos para usuários
+├── lib/                  # Utilitários e dados
+│   ├── utils.ts          # Funções utilitárias
+│   └── mock-data.ts      # Dados mockados do Supabase
+└── hooks/                # React hooks personalizados
+    └── use-data-table.ts # Hook para DataTable
 ```
 
 ## 🎯 Recursos Implementados
@@ -77,9 +91,9 @@ frontend/
 
 2. **Executar em modo desenvolvimento**
 
-   ```bash
-   pnpm dev
-   ```
+```bash
+pnpm dev
+```
 
 3. **Acessar a aplicação**
    ```

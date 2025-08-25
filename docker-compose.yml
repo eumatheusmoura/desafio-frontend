@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./frontend/.env.local
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  # Serviço de desenvolvimento (opcional)
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3000"
+    env_file:
+      - ./frontend/.env.local
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    networks:
+      - app-network
+    profiles:
+      - dev
+
+networks:
+  app-network:
+    driver: bridge
